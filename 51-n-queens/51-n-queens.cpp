@@ -10,15 +10,15 @@ public:
                 if (x.find(i)!=x.end())continue;
                 if (dia.find(i-r)!=dia.end())continue;
                 if (ndia.find(i+r)!=ndia.end())continue;
-                set<int> newx{i};
-                set<int> newdia{i-r};
-                set<int> newndia{i+r};
-                newx.insert(x.begin(),x.end());
-                newdia.insert(dia.begin(),dia.end());
-                newndia.insert(ndia.begin(),ndia.end());
-                vector<string> nex=temp;
-                nex.push_back(string(i,'.')+'Q'+string(n-1-i,'.'));
-                dfs(out,nex,newx,newdia,newndia,r+1,n);
+                x.insert(i);
+                dia.insert(i-r);
+                ndia.insert(i+r);
+                temp.push_back(string(i,'.')+'Q'+string(n-1-i,'.'));
+                dfs(out,temp,x,dia,ndia,r+1,n);
+                temp.pop_back();
+                x.erase(i);
+                dia.erase(i-r);
+                ndia.erase(i+r);
             }
         }
     }
