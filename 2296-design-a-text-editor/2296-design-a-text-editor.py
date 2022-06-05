@@ -21,16 +21,24 @@ class TextEditor:
             self.stack2.append(self.stack1.pop())
             k-=1
         n=len(self.stack1)
-        mi=min(10,n)
-        return ''.join(self.stack1[n-mi:n])
+        out=''
+        for i in range(n-1,n-11,-1):
+            if i<0:
+                break
+            out=self.stack1[i]+out
+        return out
 
     def cursorRight(self, k: int) -> str:
         while self.stack2 and k:
             self.stack1.append(self.stack2.pop())
             k-=1
         n=len(self.stack1)
-        mi=min(10,n)
-        return ''.join(self.stack1[n-mi:n])
+        out=''
+        for i in range(n-1,n-11,-1):
+            if i<0:
+                break
+            out=self.stack1[i]+out
+        return out
 
 
 # Your TextEditor object will be instantiated and called as such:
