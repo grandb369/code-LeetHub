@@ -1,26 +1,16 @@
-class Trie:
-    def __init__(self):
-        self.data={}
-
-    def update(self, i, s):
-        if i>=0:
-            cur=s[i]
-            if s[i] not in self.data:
-                self.data[cur]=Trie()
-            self.data[cur].update(i-1, s)
-    
-    def search(self, pre):
-        if not self.data:
-            return pre+1 if pre else 0
-        out=0
-        for nex in self.data:
-            out+=self.data[nex].search(pre+1)
-        return out
-            
 class Solution:
     def minimumLengthEncoding(self, words: List[str]) -> int:
-        tree=Trie()
-        for s in words:
-            tree.update(len(s)-1, s)
-        out=tree.search(0)
+        out=0
+        k={}
+        words.sort(key=lambda x:len(x),reverse=True)
+        for w in words:
+            new=False
+            cur=k
+            for j in range(len(w)-1,-1,-1):
+                if w[j] not in cur:
+                    new=True
+                    cur[w[j]]={}
+                cur=cur[w[j]]
+            if new==True:
+                out+=len(w)+1
         return out
