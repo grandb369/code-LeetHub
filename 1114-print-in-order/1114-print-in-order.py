@@ -1,28 +1,25 @@
-class Foo {
-public:
-    promise<void>p1;
-    promise<void>p2;
-    Foo() {
-        
-    }
+import threading
+class Foo:
+    def __init__(self):
+        self.p1=threading.Lock()
+        self.p2=threading.Lock()
+        self.p1.acquire()
+        self.p2.acquire()
 
-    void first(function<void()> printFirst) {
-        
-        // printFirst() outputs "first". Do not change or remove this line.
-        printFirst();
-        p1.set_value();
-    }
 
-    void second(function<void()> printSecond) {
-        p1.get_future().wait();
-        // printSecond() outputs "second". Do not change or remove this line.
-        printSecond();
-        p2.set_value();
-    }
+    def first(self, printFirst: 'Callable[[], None]') -> None:
+        # printFirst() outputs "first". Do not change or remove this line.
+        printFirst()
+        self.p1.release()
 
-    void third(function<void()> printThird) {
-        p2.get_future().wait();
-        // printThird() outputs "third". Do not change or remove this line.
-        printThird();
-    }
-};
+
+    def second(self, printSecond: 'Callable[[], None]') -> None:
+        self.p1.acquire()
+        # printSecond() outputs "second". Do not change or remove this line.
+        printSecond()
+        self.p2.release()
+
+    def third(self, printThird: 'Callable[[], None]') -> None:
+        self.p2.acquire()
+        # printThird() outputs "third". Do not change or remove this line.
+        printThird()
