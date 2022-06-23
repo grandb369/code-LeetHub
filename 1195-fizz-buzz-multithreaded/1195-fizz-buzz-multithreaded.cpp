@@ -6,9 +6,9 @@ private:
 public:
     FizzBuzz(int n) {
         this->n = n+1;
-        this->fi.lock();
-        this->bu.lock();
-        this->fibu.lock();
+        fi.lock();
+        bu.lock();
+        fibu.lock();
     }
 
     // printFizz() outputs "fizz".
@@ -17,9 +17,9 @@ public:
         {
             if(i%3==0 && i%5!=0)
             {
-                this->fi.lock();
+                fi.lock();
                 printFizz();
-                this->num.unlock();
+                num.unlock();
             }
         }
     }
@@ -30,9 +30,9 @@ public:
         {
             if(i%3!=0 && i%5==0)
             {
-                this->bu.lock();
+                bu.lock();
                 printBuzz();
-                this->num.unlock();
+                num.unlock();
             }
         }
     }
@@ -43,9 +43,9 @@ public:
         {
             if(i%3==0 && i%5==0)
             {
-                this->fibu.lock();
+                fibu.lock();
                 printFizzBuzz();
-                this->num.unlock();
+                num.unlock();
             }
         }
     }
@@ -54,23 +54,23 @@ public:
     void number(function<void(int)> printNumber) {
         for(int i=1;i<this->n;i++)
         {
-            this->num.lock();
+            num.lock();
             if(i%3==0 && i%5==0)
             {
-                this->fibu.unlock();
+                fibu.unlock();
             }
             else if(i%3==0)
             {
-                this->fi.unlock();
+                fi.unlock();
             }
             else if(i%5==0)
             {
-                this->bu.unlock();
+                bu.unlock();
             }
             else
             {
                 printNumber(i);
-                this->num.unlock();
+                num.unlock();
             }
         }
     }
