@@ -1,7 +1,7 @@
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        partial_sort(nums.begin(),nums.begin()+k,nums.end(),std::greater{});
-        return nums[k-1];
+        partial_sort(nums.rbegin(),nums.rbegin()+k,nums.rend(),std::greater{});
+        return nums[nums.size()-k];
     }
 };
