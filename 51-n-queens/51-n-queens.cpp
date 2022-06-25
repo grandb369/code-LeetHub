@@ -1,48 +1,49 @@
 class Solution {
 public:
-    bool check(vector<string>&temp, int r, int c, int n)
-    {
-        for(int i=0;i<=r;i++)
-        {
-            if(temp[i][c]=='Q')return false;
-        }
-        int x=r;
-        int y=c;
-        while (x>=0 && y<n)
-        {
-            if(temp[x][y]=='Q')return false;
-            x--;
-            y++;
-        }
-        x=r;
-        y=c;
-        while(x>=0 && y>=0)
-        {
-            if(temp[x][y]=='Q')return false;
-            x--;
-            y--;
-        }
-        return true;
-    }
-    void dfs(vector<vector<string>>&out, vector<string> temp, int r, int n)
+    void back(vector<vector<string>>&out, int r, int n, vector<string>&temp)
     {
         if(r==n)out.push_back(temp);
         else
         {
-            for(int i=0;i<n;i++)
+            for(int c=0;c<n;c++)
             {
-                if(check(temp,r,i,n))
+                int x=r-1;
+                int y;
+                bool flag=true;
+                while(x>=0)
                 {
-                    temp[r][i]='Q';
-                    dfs(out,temp,r+1,n);
-                    temp[r][i]='.';
+                    if(temp[x][c]=='Q')flag=false;
+                    x--;
                 }
+                if(!flag)continue;
+                x=r-1;
+                y=c-1;
+                while(x>=0 && y>=0)
+                {
+                    if(temp[x][y]=='Q')flag=false;
+                    x--;
+                    y--;
+                }
+                if(!flag)continue;
+                x=r-1;
+                y=c+1;
+                while(x>=0 && y<n)
+                {
+                    if(temp[x][y]=='Q')flag=false;
+                    x--;
+                    y++;
+                }
+                if(!flag)continue;
+                temp[r][c]='Q';
+                back(out,r+1,n,temp);
+                temp[r][c]='.';
             }
         }
     }
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>>out;
-        dfs(out,vector<string>(n,string(n,'.')),0,n);
+        vector<string>temp(n,string(n,'.'));
+        back(out,0,n,temp);
         return out;
     }
 };
