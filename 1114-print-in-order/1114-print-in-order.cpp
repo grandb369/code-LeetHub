@@ -1,25 +1,31 @@
-import threading
-class Foo:
-    def __init__(self):
-        self.p1=threading.Event()
-        self.p2=threading.Event()
+#include <semaphore.h>
+class Foo {
+public:
+    sem_t p1;
+    sem_t p2;
+    Foo() {
+        sem_init(&p1,0,0);
+        sem_init(&p2,0,0);
+        
+    }
 
+    void first(function<void()> printFirst) {
+        
+        // printFirst() outputs "first". Do not change or remove this line.
+        printFirst();
+        sem_post(&p1);
+    }
 
-    def first(self, printFirst: 'Callable[[], None]') -> None:
-        # printFirst() outputs "first". Do not change or remove this line.
-        printFirst()
-        self.p1.set()
+    void second(function<void()> printSecond) {
+        sem_wait(&p1);
+        // printSecond() outputs "second". Do not change or remove this line.
+        printSecond();
+        sem_post(&p2);
+    }
 
-
-    def second(self, printSecond: 'Callable[[], None]') -> None:
-        self.p1.wait()
-        # printSecond() outputs "second". Do not change or remove this line.
-        printSecond()
-        self.p1.clear()
-        self.p2.set()
-
-    def third(self, printThird: 'Callable[[], None]') -> None:
-        self.p2.wait()
-        # printThird() outputs "third". Do not change or remove this line.
-        printThird()
-        self.p2.clear()
+    void third(function<void()> printThird) {
+        sem_wait(&p2);
+        // printThird() outputs "third". Do not change or remove this line.
+        printThird();
+    }
+};
