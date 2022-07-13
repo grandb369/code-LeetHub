@@ -1,31 +1,24 @@
 class Solution {
 public:
     int trap(vector<int>& nums) {
-        int l=0;
-        int r=nums.size()-1;
-        int out=0;
-        while (l<r)
+        int n = nums.size();
+        int out = 0;
+        int p_left = 0;
+        int p_right = n-1;
+
+        while (p_left < p_right)
         {
-            while(l<r && nums[l]<nums[l+1])
+            if(nums[p_left]<nums[p_right])
             {
-                l++;
-            }
-            while(l<r && nums[r]<nums[r-1])
-            {
-                r--;
-            }
-            if(l==r)break;
-            if(nums[l]<nums[r])
-            {
-                out+=(nums[l]-nums[l+1]);
-                nums[l+1]=nums[l];
-                l++;
+                out += max(0,nums[p_left]-nums[p_left+1]);
+                nums[p_left+1] = max(nums[p_left],nums[p_left+1]);
+                p_left++;
             }
             else
             {
-                out+=(nums[r]-nums[r-1]);
-                nums[r-1]=nums[r];
-                r--; 
+                out += max(0,nums[p_right]-nums[p_right-1]);
+                nums[p_right-1] = max(nums[p_right],nums[p_right-1]);
+                p_right--;
             }
         }
         return out;
