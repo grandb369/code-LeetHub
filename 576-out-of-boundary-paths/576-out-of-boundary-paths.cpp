@@ -19,7 +19,7 @@ public:
         int out=0;
         vector<vector<int>>dp(m,vector<int>(n,0));
         vector<vector<int>>dp2(m,vector<int>(n,0));
-        int mod=1000000007;
+        int mod=1e9+7;
         dp[sr][sc]=1;
         int i,r,c;
         for(i=0;i<t;i++)
