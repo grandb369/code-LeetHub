@@ -2,7 +2,7 @@ class Solution {
 public:
     int cal(int m, int n, int r, int c, int val, vector<vector<int>>& dp2)
     {
-        int mod=1000000007;
+        int mod=1e9+7;
         if(0<=r && r<m && 0<=c && c<n)
         {
             
