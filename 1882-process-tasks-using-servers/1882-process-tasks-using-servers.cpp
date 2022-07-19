@@ -1,16 +1,29 @@
-from heapq import *
-class Solution:
-    def assignTasks(self, ser: List[int], ts: List[int]) -> List[int]:
-        busy=[]
-        wait=[]
-        out=[]
-        for i in range(len(ser)):
-            heappush(wait,[ser[i],i,0])
-        for time,t in enumerate(ts):
-            while not wait or busy and busy[0][0]<=time:
-                _time,wei,index=heappop(busy)
-                heappush(wait, [wei,index,_time])
-            wei,index,_time=heappop(wait)
-            out.append(index)
-            heappush(busy,[max(time,_time)+t,wei,index])
-        return out
+class Solution {
+public:
+    vector<int> assignTasks(vector<int>& servers, vector<int>& tasks) {
+        //priority_queue<vector<long>, vector<vector<long>>,greater<vector<long>>>busy;
+        //priority_queue<vector<long>, vector<vector<long>>,greater<vector<long>>>wait;
+        priority_queue<array<long, 3>, vector<array<long, 3>>, greater<array<long, 3>>> wait, busy;
+        vector<int>out;
+        for(int i=0;i<servers.size();i++)
+        {
+            wait.push({servers[i],i,0});
+        }
+        for(int i=0;i<tasks.size();i++)
+        {
+            long index=i;
+            long time=tasks[i];
+            while(wait.size()==0 || busy.size()>0 && busy.top()[0]<=index)
+            {
+                auto temp=busy.top();
+                busy.pop();
+                wait.push({temp[1],temp[2],temp[0]});
+            }
+            auto nex=wait.top();
+            wait.pop();
+            out.push_back(nex[1]);
+            busy.push({max(index,nex[2])+time, nex[0],nex[1]});
+        }
+        return out;
+    }
+};
