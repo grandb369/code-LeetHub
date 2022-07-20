@@ -1,14 +1,15 @@
 class Solution {
 public:
-    int change(int n, vector<int>& coins) {
-        if (n==0)return 1;
+    int change(int n, vector<int>& nums) {
+        if(n==0)return 1;
         vector<int>dp(n+1,0);
-        for(int i:coins)
+        for(int c:nums)
         {
-            if(i<=n)dp[i]+=1;
-            for(int j=i+1;j<=n;j++)
+            if(c>n)continue;
+            dp[c]++;
+            for(int i=c;i<=n;i++)
             {
-                dp[j]+=dp[j-i];
+                dp[i]+=dp[i-c];
             }
         }
         return dp[n];
