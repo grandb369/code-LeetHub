@@ -11,8 +11,8 @@ public:
         //2n+1/4>=(k+1/2)**2
         //k<=(2n+1/4)**0.5-0.5
         int out=0;
-        int v=(int)(sqrt(2*n+0.25)+0.5);
-        for(int k=1;k<v;k++)
+        int v=(int)(sqrt(2*n+0.25)-0.5);
+        for(int k=1;k<=v;k++)
         {
             int val=n-(int)((k+1)*k/2);
             if(val%k==0)out++;
