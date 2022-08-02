@@ -7,7 +7,7 @@ struct com{
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& mat, int k) {
-        priority_queue<vector<int>,vector<vector<int>>, com>temp;
+        priority_queue<vector<int>,vector<vector<int>>, greater<>>temp;
         int out=mat[0][0];
         int n=mat.size();
         int m=mat[0].size();
