@@ -1,7 +1,7 @@
 class Solution {
 public:
     int combinationSum4(vector<int>& nums, int target) {
-        vector<long>dp(target+1,0);
+        vector<unsigned int>dp(target+1,0);
         sort(nums.begin(),nums.end());
         int mod=2147483647;
         for(int i:nums)
@@ -15,7 +15,6 @@ public:
             {
                 if(i-j<0)break;
                 dp[i]+=dp[i-j];
-                dp[i]%=mod;
             }
         }
         return dp.back();
