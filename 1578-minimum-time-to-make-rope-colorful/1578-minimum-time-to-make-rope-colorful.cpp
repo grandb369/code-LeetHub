@@ -1,28 +1,26 @@
 class Solution {
 public:
     int minCost(string col, vector<int>& nums) {
-        priority_queue<int, std::vector<int>, std::greater<int>> temp;
         int out=0;
-        char pre='#';
-        for(int i=0;i<col.size();i++)
+        int su=nums[0];
+        vector<int>stack{nums[0]};
+        char pre=col[0];
+        for(int i=1;i<col.size();i++)
         {
+            su+=nums[i];
             if(pre!=col[i])
             {
-                while(temp.size()>1)
-                {
-                    out+=temp.top();
-                    temp.pop();
-                }
-                temp=priority_queue<int, std::vector<int>, std::greater<int>>();
+                out+=stack[0];
+                stack.clear();
             }
-            temp.push(nums[i]);
             pre=col[i];
+            while(stack.size()>0 && stack.back()<nums[i])
+            {
+                stack.pop_back();
+            }
+            stack.push_back(nums[i]);
         }
-        while(temp.size()>1)
-        {
-            out+=temp.top();
-            temp.pop();
-        }
-        return out;
+        out+=stack[0];
+        return su-out;
     }
 };
