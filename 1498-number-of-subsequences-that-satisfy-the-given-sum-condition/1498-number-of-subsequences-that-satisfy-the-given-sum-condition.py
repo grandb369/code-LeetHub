@@ -3,6 +3,7 @@ class Solution:
         nums.sort()
         out=0
         n=len(nums)
+        mod=10**9+7
         for i in range(n):
             l=i
             r=n
@@ -18,5 +19,5 @@ class Solution:
             if nums[l]+v1>target:
                 l-=1
             if l>=i:
-                out+=2**(l-i)
-        return out%(10**9+7)
+                out+=pow(2,l-i,mod)
+        return out%mod
